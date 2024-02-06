@@ -27,8 +27,10 @@ typedef struct s_list
 	long	number_of_times_each_philo_must_eat;
 }	t_list;
 
+int	pars(int argc, char **av);
+int	init_data(t_list **obj, char **av);
 void	exit_error(char *c);
-int	ft_isdigit(int c);
+int	ft_isdigit(int c);;
 
 int	check_digit(char *s);
 

@@ -32,24 +32,19 @@ int	check_digit(char *s)
 	}
 	return (1);
 }
+
 int	pars(int argc, char **av)
 {
 	int i;
 
 	i = 0;
 	if (argc > 6 || argc < 5)
-    {
-        exit_error("invalid argument");
-        return (1);
-    }
+        return (-1);
     i = 1;
     while(av[i])
     {
         if (!check_digit(av[i]))
-        {
-            exit_error("invalid argument");
-            return (1);
-        }
+            return (-1);
         i++;
     }
     return (0);

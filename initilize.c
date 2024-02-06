@@ -12,12 +12,16 @@
 
 #include "philosopher.h"
 
-int	ini_data(t_list *obj, char **av)
-{
-	obj->number_of_philo = atoi(av[1]);
-	obj->time_to_die = atoi(av[2]);
-	obj->time_to_eat = atoi(av[3]);
-	obj->time_to_sleep = atoi(av[4]);
-	if(av[5])
-		obj->number_of_times_each_philo_must_eat = atoi(av[5]);
+int init_data(t_list **obj, char **av) {
+    if (obj == NULL || av == NULL) {
+        return -1;
+    }
+
+    (*obj)->number_of_philo = atoi(av[1]);
+    (*obj)->time_to_die = atoi(av[2]);
+    (*obj)->time_to_eat = atoi(av[3]);
+    (*obj)->time_to_sleep = atoi(av[4]);
+    if (av[5])
+		(*obj)->number_of_times_each_philo_must_eat = atoi(av[5]);
+    return 0;
 }

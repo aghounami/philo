@@ -14,10 +14,14 @@
 
 int main(int argc, char **av)
 {
-    t_list  *object = NULL;
+    t_list *object = malloc(sizeof(t_list));
 
-    if(pars(argc, av));
-        return (1);
-    int_data(&object, av);
+    if (pars(argc, av) == -1)
+    {
+        printf("invalid argument\n");
+        return -1;
+    }
+    init_data(&object, av);
+    printf("nnn %ld\n", object->number_of_philo);
     return (0);
 }
