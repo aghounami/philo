@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:45:02 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/08 16:55:50 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/08 18:34:48 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,13 @@ int ft_init_data(t_data *data, int ac, char **av)
 		|| data->time_to_eat < 60 || data->time_to_sleep < 60
 		|| (ac == 6 && data->must_eat_count < 1))
 		return (ft_error("Error: wrong arguments\n"));
-	data->philos = data->philo_count;
+	data->philo_done = 0;
+	data->dead = 0;
+	data->start = 0;
+	data->forks = malloc(sizeof(pthread_mutex_t) * data->philo_count);
+	if (!data->forks)
+		return (ft_error("Error: malloc failed\n"));
+	data->philos = malloc(sizeof(t_philo) * data->philo_count);
 	if (!data->philos)
 		return (ft_error("Error: malloc failed\n"));
 	return (0);
