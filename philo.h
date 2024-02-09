@@ -6,53 +6,72 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 08:44:36 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/08 16:56:01 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/09 18:00:23 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
-# define PHILO_H
+#define PHILO_H
+ 
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdbool.h>
+#include <pthread.h>
+#include <sys/time.h>
+#include <limits.h>
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <pthread.h>
-# include <sys/time.h>
-# include <string.h>
+typedef enum e_opcode
+{
+	LOCK,
+	UNLOCK,
+	INIT,
+	DESTROY,
+	CREATE,
+	JOIN,
+	DETACH,
+} opcode;
+	
 
-# define EATING 0
-# define SLEEPING 1
-# define THINKING 2
-# define FORK 3
-# define DEAD 4
+typedef pthread_mutex_t mutex;
+
+typedef struct s_fork
+{
+	mutex	fork;
+	int		id_fork;
+}				t_fork;
+
 
 typedef struct s_philo
 {
 	int				id;
-	int				eat_count;
-	int				state;
+	long			meals_counter;
+	bool			full;
 	long			last_eat;
-	pthread_t		thread;
-	struct s_data	*data;
-}					t_philo;
+	t_fork			*left_fork;
+	t_fork			*right_fork;
+	pthread_t		thread_id;
+	t_table			*table;
+}				t_philo;
 
-typedef struct s_data
+typedef struct s_table
 {
-	int				philo_count;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	int				must_eat_count;
-	int				philo_done;
-	int				dead;
-	long			start;
-	pthread_mutex_t	*forks;
-	pthread_mutex_t	print;
-	t_philo			*philos;
-}					t_data;
+	long			nb_philo;
+	long			time_to_die;
+	long			time_to_eat;
+	long			time_to_sleep;
+	long			nb_must_eat; //nbr_limit_meals
+	long			start_time; //start_simulation
+	bool			end_time; //end_simulation
+	t_philo			*philo;
+	t_fork			*fork;
+}				t_table;
 
-int		ft_atoi(const char *str);
+
+
+
+int	ft_atoi(const char *str);
 int	ft_error(char *str);
-int		ft_strlen(char *s);
-int ft_init_data(t_data *data, int ac, char **av);
+int	ft_strlen(char *s);
+int	parse_args(int ac, char **av);
 #endif

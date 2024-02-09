@@ -6,52 +6,26 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:45:02 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/08 18:34:48 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/09 17:47:55 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int ft_init_data(t_data *data, int ac, char **av)
+int	ft_init_table(t_table *table, int ac, char **av)
 {
-	data->philo_count = ft_atoi(av[1]);
-	data->time_to_die = ft_atoi(av[2]);
-	data->time_to_eat = ft_atoi(av[3]);
-	data->time_to_sleep = ft_atoi(av[4]);
+	table->nb_philo = ft_atoi(av[1]);
+	table->time_to_die = ft_atoi(av[2]);
+	table->time_to_eat = ft_atoi(av[3]);
+	table->time_to_sleep = ft_atoi(av[4]);
 	if (ac == 6)
-		data->must_eat_count = ft_atoi(av[5]);
+		table->nb_must_eat = ft_atoi(av[5]);
 	else
-		data->must_eat_count = -1;
-	if (data->philo_count < 2 || data->philo_count > 200 || data->time_to_die < 60
-		|| data->time_to_eat < 60 || data->time_to_sleep < 60
-		|| (ac == 6 && data->must_eat_count < 1))
-		return (ft_error("Error: wrong arguments\n"));
-	data->philo_done = 0;
-	data->dead = 0;
-	data->start = 0;
-	data->forks = malloc(sizeof(pthread_mutex_t) * data->philo_count);
-	if (!data->forks)
-		return (ft_error("Error: malloc failed\n"));
-	data->philos = malloc(sizeof(t_philo) * data->philo_count);
-	if (!data->philos)
-		return (ft_error("Error: malloc failed\n"));
+		table->nb_must_eat = -1;
+	// if (table->nb_philo < 2 || table->time_to_die < 60 || table->time_to_eat < 60
+	// 	|| table->time_to_sleep < 60 || (ac == 6 && table->nb_must_eat < 1))
+	// 	return (ft_error("Error: wrong in arguments\n"));
+	table->end_time = false;
+	table->philo = malloc(sizeof(t_philo) * table->nb_philo);
 	return (0);
 }
-
-int ft_init_philo(t_data *data)
-{
-	int i;
-
-	i = 0;
-	while (i < data->philo_count)
-	{
-		data->philos[i].id = i + 1;
-		data->philos[i].eat_count = 0;
-		data->philos[i].state = i % 2;
-		data->philos[i].last_eat = 0;
-		data->philos[i].data = data;
-		i++;
-	}
-	return (0);
-}
-
