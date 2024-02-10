@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 08:44:36 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/09 18:00:23 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/10 22:07:15 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,57 +21,49 @@
 #include <sys/time.h>
 #include <limits.h>
 
-typedef enum e_opcode
-{
-	LOCK,
-	UNLOCK,
-	INIT,
-	DESTROY,
-	CREATE,
-	JOIN,
-	DETACH,
-} opcode;
-	
-
-typedef pthread_mutex_t mutex;
-
 typedef struct s_fork
 {
-	mutex	fork;
-	int		id_fork;
-}				t_fork;
-
-
-typedef struct s_philo
-{
-	int				id;
-	long			meals_counter;
-	bool			full;
-	long			last_eat;
-	t_fork			*left_fork;
-	t_fork			*right_fork;
-	pthread_t		thread_id;
-	t_table			*table;
-}				t_philo;
+    pthread_mutex_t mutex;
+} t_fork;
 
 typedef struct s_table
 {
-	long			nb_philo;
-	long			time_to_die;
-	long			time_to_eat;
-	long			time_to_sleep;
-	long			nb_must_eat; //nbr_limit_meals
-	long			start_time; //start_simulation
-	bool			end_time; //end_simulation
-	t_philo			*philo;
-	t_fork			*fork;
-}				t_table;
+    int nb_philo;
+    int time_to_die;
+    int time_to_eat;
+    int time_to_sleep;
+    int nb_must_eat;
+    int id;
+    int meals_counter;
+    bool full;
+    long last_eat;
+    t_fork *left_fork;
+    t_fork *right_fork;
+    pthread_t thread;
+    long start;
+    long end;
+    long time;
+} t_table;
 
+typedef struct s_all
+{
+    t_table *table;
+    t_table *philo;
+    t_fork *fork;
+} t_all;
 
-
-
-int	ft_atoi(const char *str);
+int ft_atoi(const char *str);
 int	ft_error(char *str);
-int	ft_strlen(char *s);
-int	parse_args(int ac, char **av);
+int	ft_init_table(t_all *s, int ac, char **av);
+int ft_init_forks(t_all *s);
+int ft_init_philo(t_all *s);
+int ft_create_threads(t_all *s);
+void *ft_philo(void *arg);
+int ft_join_threads(t_all *s);
+int ft_destroy_mutex(t_all *s);
+int parse_args(char **av);
+long get_time(void);
+void ft_usleep(long time);
+int ft_take_forks(t_table *s);
+
 #endif

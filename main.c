@@ -6,45 +6,35 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 08:32:55 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/09 16:36:26 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/10 21:25:44 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int parse_args(int ac, char **av)
-{
-	int i;
-	int j;
-
-	i = 1;
-	while (av[i])
-	{
-		j = 0;
-		if(!(av[i][0]))
-			return (1);
-		while (av[i][j])
-		{
-			if(av[i][j] == '+' && j == 0)
-				j++;
-			if ((av[i][j] < '0' || av[i][j] > '9'))
-				return (1);
-			j++;
-		}
-		i++;
-	}
-	return (0);
-}
-
 int main(int ac, char **av)
 {
-	t_table table;
+	t_all *table;
 
-	if (ac < 5 || ac > 6 || parse_args(ac, av))
+	table = malloc(sizeof(t_all));
+    if (table == NULL)
+        return ft_error("Error: malloc failed\n");
+	if (ac < 5 || ac > 6 || parse_args(av))
 		return (ft_error("Error: wrong in arguments\n"));
 	if(ft_init_table(table, ac, av))
 		return (1);
-	init_philo(table);
-	
+	if (ft_init_forks(table))
+		return (1);
+	if (ft_init_philo(table))
+		return (1);
+	if (ft_create_threads(table))
+		return (1);
+	if (ft_join_threads(table))
+		return (1);
+	// if (ft_destroy_mutex(table))
+		return (1);
+	free(table->philo);
+	free(table->fork);
+	free(table);
 	return (0);
 }

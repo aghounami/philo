@@ -11,20 +11,20 @@ FLAGS = -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	cc $(FLAGS) $(OBJS) -o $(NAME)
+	@cc $(FLAGS) $(OBJS) -o $(NAME)
 
-%.o: %.c philosopher.h
-	cc $(FLAGS) $< -c -o $@
+%.o: %.c philo.h
+	@cc $(FLAGS) $< -c -o $@
+	@echo "✅ Compiling $<"
 
 clean:
-	rm -f $(OBJS)
+	@rm -f $(OBJS)
+	@echo "Cleaned 🧹"
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
+	@echo "philo removed 🧹"
 
 re: fclean all
 
-.PHONY: all clean fclean re
-
-
-
+.PHONY: clean

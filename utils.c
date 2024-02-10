@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 15:37:18 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/09 18:28:11 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/10 18:30:23 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ft_atoi(const char *str)
 	return (nb * sign);
 }
 
-int parse_args(int ac, char **av)
+int parse_args(char **av)
 {
 	int i;
 	int j;
@@ -76,25 +76,4 @@ int parse_args(int ac, char **av)
 		i++;
 	}
 	return (0);
-}
-
-static void handle_mutex_error(int status, opcode op)
-
-
-void	safe_mutex_hamdle(mutex *mutex, opcode op)
-{
-	if (op == LOCK)
-		pthread_mutex_lock(mutex);
-	else if (op == UNLOCK)
-		pthread_mutex_unlock(mutex);
-	else if (op == INIT)
-		pthread_mutex_init(mutex, NULL);
-	else if (op == DESTROY)
-		pthread_mutex_destroy(mutex);
-	else if (op == CREATE)
-		pthread_mutex_init(mutex, NULL);
-	else if (op == JOIN)
-		pthread_mutex_init(mutex, NULL);
-	else if (op == DETACH)
-		pthread_mutex_init(mutex, NULL);
 }
