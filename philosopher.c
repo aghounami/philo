@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:45:02 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/10 22:20:52 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/12 16:37:54 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int ft_init_philo(t_all *s)
         else
             s->philo[i].right_fork = &s->fork[i + 1];
         i++;
-		s->philo[i].start = get_time();
     }
+	// s->philo[i].start = get_time();
     return (0);
 }
 
@@ -98,12 +98,23 @@ void *ft_philo(void *arg)
 {
 	t_all *s = (t_all *)malloc(sizeof(t_all));
 
+	static int i = 0;
 	s->table = (t_table *)arg;
-	while (1)
-		if(s->table->id % 2 == 0)
-			ft_take_forks(s->table);
+	if(i == 0)
 	{
-		sleep(1);
+		if(s->table->id % 2 == 0)
+		{
+			ft_take_forks(s->table);
+			printf("philo %d is eating\n", s->table->id);
+			printf("philo %d is sleeping\n", s->table->id);
+			sleep(1);
+		}
+		printf("philo %d is thinking\n", s->table->id);
+		i++;
+	}
+	while (1)
+	{
+		
 		// ft_eat(s->table);
 		// ft_sleep(s->table);
 		// ft_think(s->table);

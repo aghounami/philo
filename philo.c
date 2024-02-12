@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:08:26 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/10 22:10:13 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/12 16:27:03 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 int ft_take_forks(t_table *s)
 {
     pthread_mutex_lock(&s->left_fork->mutex);
-    printf("%d has taken left fork\n", s->id);
+    printf("philo %d has taken left fork\n", s->id);
     pthread_mutex_lock(&s->right_fork->mutex);
-    printf("%d has taken right fork\n", s->id);
+    printf("philo %d has taken right fork\n", s->id);
     return (0);
 }
 

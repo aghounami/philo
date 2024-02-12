@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 08:44:36 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/10 22:07:15 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/12 14:42:28 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,6 @@ int parse_args(char **av);
 long get_time(void);
 void ft_usleep(long time);
 int ft_take_forks(t_table *s);
+
 
 #endif
