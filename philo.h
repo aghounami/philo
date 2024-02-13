@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 08:44:36 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/13 13:31:29 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/13 16:09:34 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,6 @@
 #include <sys/time.h>
 #include <limits.h>
 
-typedef struct s_fork
-{
-    pthread_mutex_t mutex;
-} t_fork;
-
 typedef struct s_table
 {
     int nb_philo;
@@ -33,24 +28,28 @@ typedef struct s_table
     int time_to_eat;
     int time_to_sleep;
     int nb_must_eat;
+} t_table;
+
+typedef struct s_fork
+{
+    pthread_mutex_t mutex;
+} t_fork;
+
+typedef struct s_philo
+{
     int id;
     int meals_counter;
-    bool full;
     long last_eat;
     t_fork *left_fork;
     t_fork *right_fork;
     pthread_t thread;
-    long start;
-    long end;
-    long time;
-} t_table;
-
+} t_philo;
 
 typedef struct s_all
 {
     t_table *table;
-    t_table *philo;
     t_fork *fork;
+    t_philo *philo;
 } t_all;
 
 

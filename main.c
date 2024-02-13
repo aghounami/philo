@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 08:32:55 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/13 13:21:36 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/13 16:15:07 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,27 @@
 
 int main(int ac, char **av)
 {
-	t_all *table;
+	t_all *s;
 
-	table = malloc(sizeof(t_all));
-    if (table == NULL)
+	s = malloc(sizeof(t_all));
+    if (s == NULL)
         return ft_error("Error: malloc failed\n");
 	if (ac < 5 || ac > 6 || parse_args(av))
 		return (ft_error("Error: wrong in arguments\n"));
-	if(ft_init_table(table, ac, av))
+	if(ft_init_table(s, ac, av))
 		return (1);
-	if (ft_init_philo(table))
+	if (ft_init_philo(s))
 		return (1);
-	if (ft_init_forks(table))
+	if (ft_init_forks(s))
 		return (1);
-	// if (ft_create_threads(table))
-	// 	return (1);
-	if (ft_join_threads(table))
+	if (ft_create_threads(s))
 		return (1);
-	// if (ft_destroy_mutex(table))
+	if (ft_join_threads(s))
 		return (1);
-	free(table->philo);
-	free(table->fork);
-	free(table);
+	// if (ft_destroy_mutex(s))
+		return (1);
+	free(s->philo);
+	free(s->fork);
+	free(s);
 	return (0);
 }
