@@ -6,7 +6,7 @@ SRCS =	main.c \
 		philosopher.c
 
 OBJS = $(SRCS:.c=.o)
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror 
 
 all: $(NAME)
 

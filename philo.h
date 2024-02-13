@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 08:44:36 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/12 14:42:28 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/13 13:31:29 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,14 @@ typedef struct s_table
     long time;
 } t_table;
 
+
 typedef struct s_all
 {
     t_table *table;
     t_table *philo;
     t_fork *fork;
 } t_all;
+
 
 int ft_atoi(const char *str);
 int	ft_error(char *str);

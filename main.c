@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 08:32:55 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/12 14:32:02 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/13 13:21:36 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int main(int ac, char **av)
 		return (1);
 	if (ft_init_forks(table))
 		return (1);
-	if (ft_create_threads(table))
-		return (1);
+	// if (ft_create_threads(table))
+	// 	return (1);
 	if (ft_join_threads(table))
 		return (1);
 	// if (ft_destroy_mutex(table))

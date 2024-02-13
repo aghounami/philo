@@ -6,119 +6,132 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:45:02 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/12 16:37:54 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/13 14:53:25 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_init_table(t_all *s, int ac, char **av)
+int ft_init_table(t_all *s, int ac, char **av)
 {
-	s->table = malloc(sizeof(t_table));
-	s->table->nb_philo = ft_atoi(av[1]);
-	s->table->time_to_die = ft_atoi(av[2]);
-	s->table->time_to_eat = ft_atoi(av[3]);
-	s->table->time_to_sleep = ft_atoi(av[4]);
-	if (ac == 6)
-		s->table->nb_must_eat = ft_atoi(av[5]);
-	else
-		s->table->nb_must_eat = -1;
-	s->philo = malloc(sizeof(t_table) * s->table->nb_philo);
-	s->fork = malloc(sizeof(t_fork) * s->table->nb_philo);
-	if (!s->philo || !s->fork)
-		return (ft_error("Error: malloc failed\n"));
-	return (0);
+    s->table = malloc(sizeof(t_table));
+    s->table->nb_philo = ft_atoi(av[1]);
+    s->table->time_to_die = ft_atoi(av[2]);
+	//printf("time : %d\n", s->table->time_to_die);
+    s->table->time_to_eat = ft_atoi(av[3]);
+    s->table->time_to_sleep = ft_atoi(av[4]);
+    if (ac == 6)
+        s->table->nb_must_eat = ft_atoi(av[5]);
+    else
+        s->table->nb_must_eat = -1;
+
+    // Allocation de mémoire pour s->fork
+    s->fork = malloc(sizeof(t_fork) * s->table->nb_philo);
+    if (!s->fork)
+        return (ft_error("Error: malloc failed\n"));
+
+    return (0);
 }
 
 int ft_init_philo(t_all *s)
 {
     int i;
 
+    s->philo = malloc(sizeof(t_table) * s->table->nb_philo);
+    if (!s->philo)
+        return (ft_error("Error: malloc failed\n"));
+
     i = 0;
     while (i < s->table->nb_philo)
     {
         s->philo[i].id = i + 1;
         s->philo[i].meals_counter = 0;
-        s->philo[i].full = false;
-        s->philo[i].last_eat = 0;
+		s->philo[i].last_eat = get_time();
         s->philo[i].left_fork = &s->fork[i];
         if (i == s->table->nb_philo - 1)
             s->philo[i].right_fork = &s->fork[0];
         else
             s->philo[i].right_fork = &s->fork[i + 1];
+        if (pthread_create(&s->philo[i].thread, NULL, ft_philo, &s->philo[i]))
+            return (ft_error("Error: pthread_create failed\n"));
         i++;
     }
-	// s->philo[i].start = get_time();
     return (0);
 }
 
 int ft_init_forks(t_all *s)
 {
-	int i;
+    int i;
 
-	i = 0;
-	while (i < s->table->nb_philo)
-	{
-		if (pthread_mutex_init(&s->fork[i].mutex, NULL))
-			return (ft_error("Error: pthread_mutex_init failed\n"));
-		i++;
-	}
-	return (0);
-}
-
-int ft_create_threads(t_all *s)
-{
-	int i;
-
-	i = 0;
-	while (i < s->table->nb_philo)
-	{
-		if (pthread_create(&s->philo[i].thread, NULL, ft_philo, &s->philo[i]))
-			return (ft_error("Error: pthread_create failed\n"));
-		i++;
-	}
-	return (0);
+    i = 0;
+    while (i < s->table->nb_philo)
+    {
+        if (pthread_mutex_init(&s->fork[i].mutex, NULL))
+            return (ft_error("Error: pthread_mutex_init failed\n"));
+        i++;
+    }
+    return (0);
 }
 
 int ft_join_threads(t_all *s)
 {
-	int i;
+    int i;
 
-	i = 0;
-	while (i < s->table->nb_philo)
-	{
-		if (pthread_join(s->philo[i].thread, NULL))
-			return (ft_error("Error: pthread_join failed\n"));
-		i++;
-	}
-	return (0);
+    i = 0;
+    while (i < s->table->nb_philo)
+    {
+        if (pthread_join(s->philo[i].thread, NULL))
+            return (ft_error("Error: pthread_join failed\n"));
+        i++;
+    }
+    return (0);
 }
+
+
+long get_time(void) {
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    return (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
+}
+
+// Philosopher routine
 
 void *ft_philo(void *arg)
 {
-	t_all *s = (t_all *)malloc(sizeof(t_all));
+    t_table *philo = (t_table *)arg;
 
-	static int i = 0;
-	s->table = (t_table *)arg;
-	if(i == 0)
-	{
-		if(s->table->id % 2 == 0)
-		{
-			ft_take_forks(s->table);
-			printf("philo %d is eating\n", s->table->id);
-			printf("philo %d is sleeping\n", s->table->id);
-			sleep(1);
-		}
-		printf("philo %d is thinking\n", s->table->id);
-		i++;
-	}
-	while (1)
-	{
-		
-		// ft_eat(s->table);
-		// ft_sleep(s->table);
-		// ft_think(s->table);
-	}
-	return (NULL);
+    while (1)
+    {
+        // Think
+        printf("%d is thinking\n", philo->id);
+
+        // Acquire left fork
+        pthread_mutex_lock(&philo->left_fork->mutex);
+        printf("%d has acquired left fork\n", philo->id);
+
+        // Acquire right fork
+        pthread_mutex_lock(&philo->right_fork->mutex);
+        printf("%d has acquired right fork\n", philo->id);
+
+        // Eat
+        printf("%d is eating\n", philo->id);
+        sleep(1); // Simulating eating time
+
+        // Release right fork
+        pthread_mutex_unlock(&philo->right_fork->mutex);
+        printf("%d has released right fork\n", philo->id);
+
+        // Release left fork
+        pthread_mutex_unlock(&philo->left_fork->mutex);
+        printf("%d has released left fork\n", philo->id);
+
+        // Sleep
+        printf("%d is sleeping\n", philo->id);
+        sleep(1); // Simulating sleeping time
+    }
+
+    return NULL;
 }
+
+
 
