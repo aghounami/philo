@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:45:02 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/13 16:17:28 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/13 20:30:16 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,10 @@ int ft_join_threads(t_all *s)
     i = 0;
     while (i < s->table->nb_philo)
     {
+        // printf("join\n");
         if (pthread_join(s->philo[i].thread, NULL))
             return (ft_error("Error: pthread_join failed\n"));
+        pthread_detach(s->philo[i].thread);
         i++;
     }
     return (0);
@@ -111,30 +113,22 @@ long get_time(void) {
 
 void *ft_philo(void *arg)
 {
-    t_philo *philo = (t_philo *)arg;
+    t_philo *philo;
 
+    philo = (t_philo *)arg;
+    if(philo->id % 2 == 0)
+        ft_take_forks(philo);
     while (1)
     {
-
-        printf("%d is thinking\n", philo->id);
-
-        printf("%d has acquired left fork\n", philo->id);
-
-        printf("%d has acquired right fork\n", philo->id);
-
-        printf("%d is eating\n", philo->id);
-        sleep(1);
-
-        printf("%d has released right fork\n", philo->id);
-
-        printf("%d has released left fork\n", philo->id);
-
-        printf("%d is sleeping\n", philo->id);
-        sleep(1); 
+        // ft_take_forks(philo);
+        // ft_eat(philo);
+        // ft_sleep(philo);
+        // ft_think(philo);
     }
-
-    return NULL;
+    return (NULL);
+    return (NULL);
 }
+
 
 
 

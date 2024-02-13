@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 08:44:36 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/13 16:09:34 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/13 20:29:51 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,9 @@ int ft_join_threads(t_all *s);
 int ft_destroy_mutex(t_all *s);
 int parse_args(char **av);
 long get_time(void);
-void ft_usleep(long time);
-int ft_take_forks(t_table *s);
-
+int ft_sleep(t_philo *philo);
+int ft_think(t_philo *philo);
+int ft_take_forks(t_philo *philo);
+int ft_eat(t_philo *philo);
 
 #endif
