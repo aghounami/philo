@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 15:37:18 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/10 18:30:23 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/14 22:13:35 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,11 @@ int parse_args(char **av)
 		i++;
 	}
 	return (0);
+}
+
+long get_time(void)
+{
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    return (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
 }
