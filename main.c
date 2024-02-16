@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 08:32:55 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/16 18:29:56 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/16 21:51:32 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ int main(int ac, char **av)
     table->forks = malloc(sizeof(pthread_mutex_t) * ft_atoi(av[1]));
     if (table == NULL || table->philo == NULL)
         return ft_error("Error: malloc failed for philosophers\n");
+
     if (ft_init_table(table, ac, av))
         return 1;
     if (ft_init_philo(table))
         return 1;
-
     return 0;
 }

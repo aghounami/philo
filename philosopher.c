@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:45:02 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/16 21:47:52 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/16 21:49:05 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void *ft_philo(void *arg)
         ft_sleep(philo);
         ft_think(philo);
         if(philo->meals_counter == philo->table->nb_must_eat)
-            break;
+            exit(0);
     }
     return NULL;
 }
