@@ -14,9 +14,9 @@
 
 
 int ft_take_forks(t_philo *philo) {
-    pthread_mutex_lock(&philo->left_fork->mutex);
+    pthread_mutex_lock(philo->table->left);
     printf("%d has taken left fork\n", philo->id);
-    pthread_mutex_lock(&philo->right_fork->mutex);
+    pthread_mutex_lock(philo->table->right);
     printf("%d has taken right fork\n", philo->id);
     return 0;
 }
@@ -24,9 +24,10 @@ int ft_take_forks(t_philo *philo) {
 int ft_eat(t_philo *philo) {
     printf("%d is eating\n", philo->id);
     usleep(philo->table->time_to_eat * 1000);
-    pthread_mutex_unlock(&philo->left_fork->mutex);
-    pthread_mutex_unlock(&philo->right_fork->mutex);
+    pthread_mutex_unlock(philo->table->left);
+    pthread_mutex_unlock(philo->table->right);
     return 0;
+
 }
 
 int ft_sleep(t_philo *philo) {

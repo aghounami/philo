@@ -23,9 +23,8 @@ int main(int ac, char **av) {
         return ft_error("Error: malloc failed for philosophers\n");
 
     philo->table = malloc(sizeof(t_table));
-    philo->left_fork = malloc(sizeof(t_fork) * ft_atoi(av[1]));
-    philo->right_fork = malloc(sizeof(t_fork) * ft_atoi(av[1]));
-    if (philo->table == NULL || philo->left_fork == NULL || philo->right_fork == NULL) {
+    philo->forks = malloc(sizeof(pthread_mutex_t) * ft_atoi(av[1]));
+    if (philo->table == NULL || philo->forks == NULL) {
         free(philo);
         return ft_error("Error: malloc failed\n");
     }
@@ -36,7 +35,6 @@ int main(int ac, char **av) {
         return 1;
 
     free(philo->table);
-    free(philo->left_fork);
     free(philo);
 
     return 0;
