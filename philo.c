@@ -6,26 +6,29 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:08:26 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/15 05:03:03 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/16 15:20:36 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 
-int ft_take_forks(t_philo *philo) {
-    pthread_mutex_lock(&philo->left_fork->mutex);
+int ft_take_forks(t_philo *philo)
+{
+    pthread_mutex_lock(philo->left_fork);
     printf("%d has taken left fork\n", philo->id);
-    pthread_mutex_lock(&philo->right_fork->mutex);
+    pthread_mutex_lock(philo->right_fork);
     printf("%d has taken right fork\n", philo->id);
+    // pthread_mutex_unlock(philo->left_fork);
+    // pthread_mutex_unlock(philo->right_fork);
     return 0;
 }
 
 int ft_eat(t_philo *philo) {
     printf("%d is eating\n", philo->id);
     usleep(philo->table->time_to_eat * 1000);
-    pthread_mutex_unlock(&philo->left_fork->mutex);
-    pthread_mutex_unlock(&philo->right_fork->mutex);
+    pthread_mutex_unlock(philo->left_fork);
+    pthread_mutex_unlock(philo->right_fork);
     return 0;
 }
 

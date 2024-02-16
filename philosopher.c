@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:45:02 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/15 05:04:09 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/16 15:46:46 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,6 @@ int ft_init_table(t_philo *philo, int ac, char **av) {
     else
         philo->table->nb_must_eat = -1;
 
-    int i = 0;
-    while (i < philo->table->nb_philo) 
-    {
-        pthread_mutex_init(&philo->left_fork[i].mutex, NULL);
-        pthread_mutex_init(&philo->right_fork[i].mutex, NULL);
-        philo->left_fork[i].is_taken = false;
-        philo->right_fork[i].is_taken = false;
-        i++;
-    }
-
     return 0;
 }
 
@@ -42,20 +32,32 @@ int ft_init_philo(t_philo *philo) {
         philo[i].id = i + 1;
         philo[i].meals_counter = 0;
         philo[i].last_eat = 3;
-        philo[i].left_fork = &philo->left_fork[i];
-        if (i == philo->table->nb_philo - 1)
-            philo[i].right_fork = &philo->right_fork[0];
+        philo[i].left_fork = &philo->table->forks[i];
+        if(i == philo->table->nb_philo - 1)
+            philo[i].right_fork = &philo->table->forks[0];
         else
-            philo[i].right_fork = &philo->right_fork[i + 1];
+            philo[i].right_fork = &philo->table->forks[i + 1];
     }
-    if (ft_create_threads(philo))
-        return 1;
-    if (ft_join_threads(philo))
-        return 1;
+    // if(ft_init_forks(philo))
+    //     return 1;
+    // if (ft_create_threads(philo))
+    //     return 1;
+    // if (ft_join_threads(philo))
+    //     return 1;
+    ft_philo(&philo);
     
     return 0;
 }
 
+int ft_init_forks(t_philo *philo) {
+    int i;
+
+    for (i = 0; i < philo->table->nb_philo; i++) {
+        if (pthread_mutex_init(&philo->right_fork[i], NULL))
+            return ft_error("Error: pthread_mutex_init failed\n");
+    }
+    return 0;
+}
 
 int ft_create_threads(t_philo *philo)
 {
@@ -87,13 +89,13 @@ int ft_join_threads(t_philo *philo)
 void *ft_philo(void *arg)
 {
     t_philo *philo = (t_philo *)arg;
-    while (1)
-    {
+    // while (1)
+    // {
         ft_take_forks(philo);
-        ft_eat(philo);
-        ft_sleep(philo);
-        ft_think(philo);
-    }
+        // ft_eat(philo);
+        // ft_sleep(philo);
+        // ft_think(philo);
+    // }
     return (NULL);
 }
 

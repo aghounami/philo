@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 08:44:36 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/15 05:09:25 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/16 15:30:25 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,8 @@ typedef struct s_table
     int time_to_eat;
     int time_to_sleep;
     int nb_must_eat;
+    pthread_mutex_t *forks;
 } t_table;
-
-typedef struct s_fork
-{
-    pthread_mutex_t mutex;
-    bool is_taken;
-} t_fork;
 
 typedef struct s_philo
 {
@@ -44,8 +39,8 @@ typedef struct s_philo
     int meals_counter;
     long last_eat;
     t_table *table;
-    t_fork *left_fork;
-    t_fork *right_fork;
+    pthread_mutex_t *left_fork;
+    pthread_mutex_t *right_fork;
     pthread_t thread;
 } t_philo;
 
