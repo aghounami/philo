@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 08:32:55 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/16 21:51:32 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/17 12:48:31 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ int main(int ac, char **av)
     if (ft_init_table(table, ac, av))
         return 1;
     if (ft_init_philo(table))
-        return 1;
+        return 1; 
     return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:45:02 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/16 21:49:05 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/17 12:51:48 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,13 @@ int ft_init_philo(t_table *table)
         table->philo[i].id = i + 1;
         table->philo[i].meals_counter = 0;
         table->philo[i].last_eat = get_time();
-        table->philo[i].table = table;
+        table->philo[i].start = get_time();
+        // table->philo[i].died_flag_mutex = &table->philo[i].died_flag_mutex;
+        // table->philo[i].died_flag = &table->died; // Store pointer to int
+        // pthread_mutex_destroy(table->philo->died_flag_mutex);
         table->philo[i].left_fork = &table->forks[i];
         table->philo[i].right_fork = &table->forks[(i + 1) % table->nb_philo];
+        table->philo[i].table = table;
     }
     if (ft_init_forks(table))
         return 1;
@@ -44,6 +48,7 @@ int ft_init_philo(t_table *table)
         return 1;
     if (ft_join_threads(table))
         return 1;
+    // printf("%ld\n", (table->philo->last_eat + table->time_to_die) - get_time());
     return 0;
 }
 
@@ -91,17 +96,25 @@ void *ft_philo(void *arg)
 {
     t_philo *philo;
     philo = (t_philo *)arg;
+    if(philo->table->nb_philo == 1)
+    {
+        pthread_mutex_lock(philo->left_fork);
+        printf("%ld %d has taken a fork\n", get_time() - philo->start, philo->id);
+        usleep(philo->table->time_to_die * 1000);
+        printf("%ld %d died\n", get_time() - philo->start, philo->id);
+        return NULL;
+    }
     if(philo->id % 2 != 0)
         usleep(1000);
-    while (1)
+    while (philo->meals_counter != philo->table->nb_must_eat)
     {
-        // printf(" nb must eat      {{  %d  }}\n", philo->table->nb_must_eat);
         ft_take_forks(philo);
-        ft_eat(philo);
+        if(ft_eat(philo) == 1)
+            return NULL;
         ft_sleep(philo);
         ft_think(philo);
-        if(philo->meals_counter == philo->table->nb_must_eat)
-            exit(0);
+        if(philo->table->nb_must_eat != -1)
+            philo->meals_counter++;
     }
     return NULL;
 }

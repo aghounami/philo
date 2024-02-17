@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 08:44:36 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/16 21:49:17 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/17 12:52:02 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,25 @@
 typedef struct s_philo
 {
     int id;
-    useconds_t meals_counter;
+    long meals_counter;
     long last_eat;
+    long start;
     pthread_t thread;
     pthread_mutex_t *right_fork;
     pthread_mutex_t *left_fork;
+    // pthread_mutex_t *died_flag_mutex;
+    // int *died_flag;
     struct s_table *table;
 } t_philo;
 
 typedef struct s_table
 {
+    // int died;
     int nb_philo;
-    // int nb_must_eat;
-    useconds_t time_to_die;
-    useconds_t time_to_eat;
-    useconds_t time_to_sleep;
-    useconds_t nb_must_eat;
+    long time_to_die;
+    long time_to_eat;
+    long time_to_sleep;
+    long nb_must_eat;
     pthread_mutex_t *forks;
     t_philo *philo;
 } t_table;

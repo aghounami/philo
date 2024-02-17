@@ -6,9 +6,9 @@ SRCS =	main.c \
 		philosopher.c
 
 OBJS = $(SRCS:.c=.o)
-FLAGS = -Wall -Wextra -Werror -pthread
+FLAGS = -Wall -Wextra -Werror -pthread -fsanitize=thread -g
 
-all: $(NAME) clean
+all: $(NAME)
 
 $(NAME): $(OBJS)
 	@cc $(FLAGS) $(OBJS) -o $(NAME)
