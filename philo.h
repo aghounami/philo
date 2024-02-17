@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 08:44:36 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/17 12:52:02 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/17 18:55:57 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,15 @@ typedef struct s_philo
     pthread_t thread;
     pthread_mutex_t *right_fork;
     pthread_mutex_t *left_fork;
-    // pthread_mutex_t *died_flag_mutex;
-    // int *died_flag;
     struct s_table *table;
+    int (*check_death)(struct s_philo *philo);
 } t_philo;
 
 typedef struct s_table
 {
     // int died;
+    int died_flag;
+    pthread_mutex_t *died_flag_mutex;
     int nb_philo;
     long time_to_die;
     long time_to_eat;
@@ -49,6 +50,8 @@ typedef struct s_table
     t_philo *philo;
 } t_table;
 
+// int stop_all_threads(t_table *table);
+int check_death(t_philo *philo);
 int parse_args(char **av);
 int ft_atoi(const char *str);
 int ft_error(char *str);

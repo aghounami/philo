@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:45:02 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/17 12:51:48 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/17 19:41:52 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 int ft_init_table(t_table *table, int ac, char **av)
 {
+    table->died_flag = 0;
+    table->died_flag_mutex = malloc(sizeof(pthread_mutex_t));
+    pthread_mutex_init(table->died_flag_mutex, NULL);
     table->nb_philo = ft_atoi(av[1]);
     table->time_to_die = ft_atoi(av[2]);
     table->time_to_eat = ft_atoi(av[3]);
@@ -35,9 +38,6 @@ int ft_init_philo(t_table *table)
         table->philo[i].meals_counter = 0;
         table->philo[i].last_eat = get_time();
         table->philo[i].start = get_time();
-        // table->philo[i].died_flag_mutex = &table->philo[i].died_flag_mutex;
-        // table->philo[i].died_flag = &table->died; // Store pointer to int
-        // pthread_mutex_destroy(table->philo->died_flag_mutex);
         table->philo[i].left_fork = &table->forks[i];
         table->philo[i].right_fork = &table->forks[(i + 1) % table->nb_philo];
         table->philo[i].table = table;
@@ -48,7 +48,6 @@ int ft_init_philo(t_table *table)
         return 1;
     if (ft_join_threads(table))
         return 1;
-    // printf("%ld\n", (table->philo->last_eat + table->time_to_die) - get_time());
     return 0;
 }
 
@@ -96,25 +95,28 @@ void *ft_philo(void *arg)
 {
     t_philo *philo;
     philo = (t_philo *)arg;
-    if(philo->table->nb_philo == 1)
-    {
-        pthread_mutex_lock(philo->left_fork);
-        printf("%ld %d has taken a fork\n", get_time() - philo->start, philo->id);
-        usleep(philo->table->time_to_die * 1000);
-        printf("%ld %d died\n", get_time() - philo->start, philo->id);
-        return NULL;
-    }
-    if(philo->id % 2 != 0)
-        usleep(1000);
+    if (philo->id % 2 != 0)
+        usleep(philo->table->time_to_eat * 1000);
+
+    // if (philo->table->nb_philo == 1)
+    // {
+    //     pthread_mutex_lock(philo->left_fork);
+    //     printf("%ld %d has taken a fork\n", get_time() - philo->start, philo->id);
+    //     usleep(philo->table->time_to_die * 1000);
+    //     printf("%ld %d died\n", get_time() - philo->start, philo->id);
+    //     return NULL;
+    // }
     while (philo->meals_counter != philo->table->nb_must_eat)
     {
-        ft_take_forks(philo);
-        if(ft_eat(philo) == 1)
+        pthread_mutex_lock(philo->table->died_flag_mutex);
+        if (philo->table->died_flag == 1)
+        {
+            pthread_mutex_unlock(philo->table->died_flag_mutex);
             return NULL;
-        ft_sleep(philo);
-        ft_think(philo);
-        if(philo->table->nb_must_eat != -1)
-            philo->meals_counter++;
+        }
+        pthread_mutex_unlock(philo->table->died_flag_mutex);
+        if (ft_take_forks(philo) == 1)
+            return NULL;
     }
     return NULL;
 }
