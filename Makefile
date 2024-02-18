@@ -1,13 +1,8 @@
 NAME = philo
-SRCS =	main.c \
-		philo.c \
-		utils.c \
-		monitor.c \
-		philosopher.c \
-		routine.c
+SRCS =	utils_philo.c  philo.c utils.c monitor.c philosopher.c routine.c
 
 OBJS = $(SRCS:.c=.o)
-FLAGS = -Wall -Wextra -Werror -pthread -fsanitize=thread -g
+FLAGS = -Wall -Wextra -Werror -pthread
 
 all: $(NAME)
 

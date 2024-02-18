@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:45:02 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/18 00:55:12 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/18 22:55:49 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@ int	ft_init_table(t_table *table, int ac, char **av)
 		table->nb_must_eat = ft_atoi(av[5]);
 	else
 		table->nb_must_eat = -1;
+	if (table->nb_philo == 0 || table->time_to_eat == 0
+		|| table->time_to_sleep == 0)
+	{
+		ft_error("Error: wrong argument\n");
+		return (1);
+	}
 	return (0);
 }
 
@@ -52,7 +58,7 @@ int	ft_init_philo(t_table *table)
 	}
 	if (ft_init_forks(table))
 		return (1);
-	if (ft_create_threads(table))
+	if (ft_create_threads(table) == 1)
 		return (1);
 	if (ft_join_threads(table))
 		return (1);
@@ -83,6 +89,8 @@ int	ft_create_threads(t_table *table)
 		if (pthread_create(&table->philo[i].thread, NULL,
 				ft_philo, &table->philo[i]))
 			return (ft_error("Error: pthread_create failed\n"));
+		if (table->time_to_die == 0)
+			check_death(table);
 		i++;
 	}
 	check_death(table);
