@@ -3,7 +3,8 @@ SRCS =	main.c \
 		philo.c \
 		utils.c \
 		monitor.c \
-		philosopher.c
+		philosopher.c \
+		routine.c
 
 OBJS = $(SRCS:.c=.o)
 FLAGS = -Wall -Wextra -Werror -pthread -fsanitize=thread -g
