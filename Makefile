@@ -32,4 +32,6 @@ push:
 	@git push
 	@echo "\033[0;31mpushed to git 🚀\033[0m\n"
 
+
+
 .PHONY: clean
