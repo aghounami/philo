@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:08:26 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/18 22:56:58 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/19 11:01:16 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,15 @@ int	chek_before_lock(t_philo *philo, int i)
 	}
 	pthread_mutex_unlock(philo->table->died_flag_mutex);
 	return (0);
+}
+
+void	ft_usleep(int duration)
+{
+	long	time_start;
+
+	time_start = get_time();
+	while (get_time() - time_start < duration)
+	{
+		usleep(100);
+	}
 }
