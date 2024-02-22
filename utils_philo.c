@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:08:26 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/19 11:01:16 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/22 04:24:46 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,6 @@ void	ft_usleep(int duration)
 	time_start = get_time();
 	while (get_time() - time_start < duration)
 	{
-		usleep(100);
+		usleep(10);
 	}
 }

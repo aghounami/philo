@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:45:02 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/19 10:23:22 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/22 04:17:00 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ int	ft_init_philo(t_table *table)
 		table->philo[i].meals_counter = 0;
 		table->philo[i].last_eat = get_time();
 		table->philo[i].start = get_time();
-		table->philo[i].left_fork = &table->forks[i];
-		table->philo[i].right_fork = &table->forks[(i + 1) % table->nb_philo];
+		table->philo[i].left_fork = &table->forks[(i + 1) % table->nb_philo];
+		table->philo[i].right_fork = &table->forks[i];
 		table->philo[i].table = table;
 		i++;
 	}

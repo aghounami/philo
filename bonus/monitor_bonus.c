@@ -6,48 +6,48 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:22:40 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/19 22:47:59 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/22 04:53:00 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-// int	check_meals(t_philo *philo, int nb_must_eat)
-// {
-// 	pthread_mutex_lock(philo->table->counter_mutex);
-// 	if (philo->meals_counter == nb_must_eat)
-// 	{
-// 		pthread_mutex_unlock(philo->table->counter_mutex);
-// 		return (1);
-// 	}
-// 	pthread_mutex_unlock(philo->table->counter_mutex);
-// 	return (0);
-// }
+int	check_meals(t_philo *philo, int nb_must_eat)
+{
+	sem_wait(philo->counter_semaphore);
+	if (philo->counter == nb_must_eat)
+	{
+		sem_post(philo->counter_semaphore);
+		return (1);
+	}
+	sem_post(philo->counter_semaphore);
+	return (0);
+}
 
-// int	check_death(t_table *table)
-// {
-// 	int	i;
+void	*check_death(void *arg)
+{
+	t_philo	*philo;
 
-// 	while (table->died_flag == 0)
-// 	{
-// 		i = 0;
-// 		while (i < table->nb_philo)
-// 		{
-// 			pthread_mutex_lock(table->philo[i].table->meals_mutex);
-// 			if (get_time() - table->philo[i].last_eat > table->time_to_die)
-// 			{
-// 				pthread_mutex_unlock(table->philo[i].table->meals_mutex);
-// 				pthread_mutex_lock(table->died_flag_mutex);
-// 				table->died_flag = 1;
-// 				ft_print(&table->philo[i], "died\n");
-// 				pthread_mutex_unlock(table->died_flag_mutex);
-// 				return (1);
-// 			}
-// 			pthread_mutex_unlock(table->philo[i].table->meals_mutex);
-// 			if (check_meals(&table->philo[i], table->nb_must_eat))
-// 				return (1);
-// 			i++;
-// 		}
-// 	}
-// 	return (0);
-// }
+	philo = (t_philo *)arg;
+	while (philo->died_flag == 0)
+	{
+		usleep(1000);
+		sem_wait(philo->died_flag_semaphor);
+		if (get_time() - philo->last_eat > philo->time_to_die && \
+			philo->died_flag == 0)
+		{
+			philo->died_flag = 1;
+			sem_post(philo->died_flag_semaphor);
+			sem_wait(philo->print_semaphore);
+			printf("%ld %ld died\n", get_time() - philo->start, \
+				philo->philo_id);
+			sem_post(philo->print_semaphore);
+			exit(1);
+		}
+		sem_post(philo->died_flag_semaphor);
+		usleep(1000);
+		if (check_meals(philo, philo->nb_must_eat))
+			break ;
+	}
+	exit(0);
+}

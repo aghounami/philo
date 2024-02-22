@@ -3,7 +3,7 @@ bonus = utils_philo_bonus.c  philo_bonus.c utils_bonus.c \
 		monitor_bonus.c philosopher_bonus.c routine_bonus.c
 
 OBJS = $(bonus:.c=.o)
-FLAGS = -Wall -Wextra -Werror 
+FLAGS = -Wall -Wextra -Werror -pthread
 
 all: $(NAME)
 

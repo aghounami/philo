@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:30:23 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/20 20:29:42 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/22 04:36:50 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,35 +18,35 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/time.h>
+# include <sys/wait.h>
 # include <semaphore.h>
+# include <signal.h>
+# include <pthread.h>
 
 typedef struct s_philo
 {
 	int				*id;
-	long			meals_counter;
+	long			counter;
 	long			last_eat;
 	long			start;
 	int				died_flag;
-	// pthread_t		thread;
-	sem_t			*died_flag_mutex;
-	sem_t			*print_mutex;
-	sem_t			*meals_mutex;
-	sem_t			*counter_mutex;
+	sem_t			*died_flag_semaphor;
+	sem_t			*print_semaphore;
+	sem_t			*meals_semaphore;
+	sem_t			*counter_semaphore;
 	sem_t			*forks;
 	int				nb_philo;
 	long			time_to_die;
 	long			time_to_eat;
 	long			time_to_sleep;
 	long			nb_must_eat;
-	long            nb_forks;
+	long			nb_forks;
 	long			philo_id;
 	pthread_t		check_monitor;
-	// sem_t			*right_fork;
-	// sem_t			*left_fork;
-	// struct s_table	*table;
 }	t_philo;
 
-void	*ft_philo(t_philo *philo);
+void	*check_death(void *arg);
+void	ft_philo(t_philo *philo);
 int		ft_init_table(t_philo *table, int ac, char **av);
 int		ft_init_process(t_philo *table);
 void	ft_usleep(int duration);
@@ -59,5 +59,6 @@ int		ft_eat(t_philo *philo);
 int		ft_sleep(t_philo *philo);
 int		ft_think(t_philo *philo);
 void	ft_print(t_philo *philo, char *str);
+void	exit_philo(t_philo *philo);
 
 #endif

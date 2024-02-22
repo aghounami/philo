@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 08:44:36 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/19 15:44:34 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/22 04:57:31 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/time.h>
-#include <semaphore.h>
 
 typedef struct s_philo
 {
