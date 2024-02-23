@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:22:40 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/22 04:59:23 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/23 02:40:06 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ int	check_death(t_table *table)
 				pthread_mutex_unlock(table->philo[i].table->meals_mutex);
 				pthread_mutex_lock(table->died_flag_mutex);
 				table->died_flag = 1;
+				pthread_mutex_unlock(table->died_flag_mutex);
 				printf("%ld %d died\n", get_time() - table->philo[i].start,
 					table->philo[i].id);
-				pthread_mutex_unlock(table->died_flag_mutex);
-				return (1);
+				break ;
 			}
 			pthread_mutex_unlock(table->philo[i].table->meals_mutex);
 			if (check_meals(&table->philo[i], table->nb_must_eat))
@@ -50,5 +50,5 @@ int	check_death(t_table *table)
 			i++;
 		}
 	}
-	return (0);
+	return (1);
 }

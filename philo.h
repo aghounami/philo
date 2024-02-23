@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 08:44:36 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/22 04:57:31 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/23 02:51:15 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_table
 	pthread_mutex_t	*print_mutex;
 	pthread_mutex_t	*meals_mutex;
 	pthread_mutex_t	*counter_mutex;
+	pthread_mutex_t	*start_mutex;
 	int				nb_philo;
 	long			time_to_die;
 	long			time_to_eat;

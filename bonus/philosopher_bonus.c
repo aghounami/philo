@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:45:02 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/22 04:37:30 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/23 02:18:21 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	ft_init_table(t_philo *table, int ac, char **av)
 		table->nb_must_eat = -1;
 	table->counter = 0;
 	table->last_eat = 0;
-	table->start = get_time();
 	table->died_flag = 0;
 	if (table->nb_philo == 0 || table->time_to_eat == 0
 		|| table->time_to_sleep == 0)
@@ -67,6 +66,7 @@ int	ft_init_process(t_philo *philo)
 	int	i;
 
 	i = 0;
+	philo->start = get_time();
 	while (i < philo->nb_philo)
 	{
 		philo->id[i] = fork();

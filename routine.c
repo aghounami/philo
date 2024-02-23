@@ -6,21 +6,32 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 00:00:13 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/22 05:01:00 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/23 02:55:24 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void init_time(t_philo *philo)
+{
+	pthread_mutex_lock(philo->table->start_mutex);
+	philo->start = get_time();
+	pthread_mutex_unlock(philo->table->start_mutex);
+	pthread_mutex_lock(philo->table->meals_mutex);
+	philo->last_eat = get_time();
+	pthread_mutex_unlock(philo->table->meals_mutex);
+}
 
 void	*ft_philo(void *arg)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	init_time(philo);
 	if (philo->table->nb_philo == 1)
 	{
 		ft_print(philo, "take a fork\n");
-		ft_usleep(philo->table->time_to_die * 1000);
+		ft_usleep(1000);
 		return (NULL);
 	}
 	if (philo->id % 2 == 0)

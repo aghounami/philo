@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:45:02 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/22 04:17:00 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/23 02:51:36 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	ft_init_table(t_table *table, int ac, char **av)
 	table->counter_mutex = malloc(sizeof(pthread_mutex_t));
 	table->print_mutex = malloc(sizeof(pthread_mutex_t));
 	table->meals_mutex = malloc(sizeof(pthread_mutex_t));
+	table->start_mutex = malloc(sizeof(pthread_mutex_t));
+	pthread_mutex_init(table->start_mutex, NULL);
 	pthread_mutex_init(table->print_mutex, NULL);
 	pthread_mutex_init(table->died_flag_mutex, NULL);
 	pthread_mutex_init(table->meals_mutex, NULL);

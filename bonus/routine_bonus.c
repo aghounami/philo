@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 00:00:13 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/22 04:49:19 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/23 02:14:10 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,12 @@ int	ft_take_forks(t_philo *philo)
 int	ft_eat(t_philo *philo)
 {
 	ft_print(philo, "is eating\n");
-	sem_wait(philo->meals_semaphore);
 	philo->last_eat = get_time();
-	sem_post(philo->meals_semaphore);
 	ft_usleep(philo->time_to_eat);
 	sem_post(philo->forks);
 	sem_post(philo->forks);
-	sem_wait(philo->counter_semaphore);
 	if (philo->nb_must_eat != -1)
 		philo->counter++;
-	sem_post(philo->counter_semaphore);
 	return (0);
 }
 
