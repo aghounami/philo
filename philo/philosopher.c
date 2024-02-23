@@ -6,15 +6,14 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:45:02 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/23 02:51:36 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/23 16:50:50 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_init_table(t_table *table, int ac, char **av)
+int	ft_init_mutex(t_table *table)
 {
-	table->died_flag = 0;
 	table->died_flag_mutex = malloc(sizeof(pthread_mutex_t));
 	table->counter_mutex = malloc(sizeof(pthread_mutex_t));
 	table->print_mutex = malloc(sizeof(pthread_mutex_t));
@@ -25,6 +24,13 @@ int	ft_init_table(t_table *table, int ac, char **av)
 	pthread_mutex_init(table->died_flag_mutex, NULL);
 	pthread_mutex_init(table->meals_mutex, NULL);
 	pthread_mutex_init(table->counter_mutex, NULL);
+	return (0);
+}
+
+int	ft_init_table(t_table *table, int ac, char **av)
+{
+	table->died_flag = 0;
+	ft_init_mutex(table);
 	table->nb_philo = ft_atoi(av[1]);
 	table->time_to_die = ft_atoi(av[2]);
 	table->time_to_eat = ft_atoi(av[3]);
@@ -64,20 +70,6 @@ int	ft_init_philo(t_table *table)
 		return (1);
 	if (ft_join_threads(table))
 		return (1);
-	return (0);
-}
-
-int	ft_init_forks(t_table *table)
-{
-	int	i;
-
-	i = 0;
-	while (i < table->nb_philo)
-	{
-		if (pthread_mutex_init(&table->forks[i], NULL))
-			return (ft_error("Error: pthread_mutex_init failed\n"));
-		i++;
-	}
 	return (0);
 }
 

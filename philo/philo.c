@@ -6,11 +6,35 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 08:32:55 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/19 11:01:21 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/23 16:55:01 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	init_time(t_philo *philo)
+{
+	pthread_mutex_lock(philo->table->start_mutex);
+	philo->start = get_time();
+	pthread_mutex_unlock(philo->table->start_mutex);
+	pthread_mutex_lock(philo->table->meals_mutex);
+	philo->last_eat = get_time();
+	pthread_mutex_unlock(philo->table->meals_mutex);
+}
+
+int	ft_init_forks(t_table *table)
+{
+	int	i;
+
+	i = 0;
+	while (i < table->nb_philo)
+	{
+		if (pthread_mutex_init(&table->forks[i], NULL))
+			return (ft_error("Error: pthread_mutex_init failed\n"));
+		i++;
+	}
+	return (0);
+}
 
 int	main(int ac, char **av)
 {

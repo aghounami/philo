@@ -6,21 +6,11 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 00:00:13 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/23 02:55:24 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/23 16:52:39 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void init_time(t_philo *philo)
-{
-	pthread_mutex_lock(philo->table->start_mutex);
-	philo->start = get_time();
-	pthread_mutex_unlock(philo->table->start_mutex);
-	pthread_mutex_lock(philo->table->meals_mutex);
-	philo->last_eat = get_time();
-	pthread_mutex_unlock(philo->table->meals_mutex);
-}
 
 void	*ft_philo(void *arg)
 {

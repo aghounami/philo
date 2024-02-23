@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 08:44:36 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/23 02:51:15 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/23 16:53:08 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ typedef struct s_table
 	t_philo			*philo;
 }	t_table;
 
+int		ft_init_forks(t_table *table);
+void	init_time(t_philo *philo);
 void	ft_usleep(int duration);
 int		ft_free(t_table *table);
 int		destroy_mutex(t_table *table, int i);

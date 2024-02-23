@@ -9,9 +9,6 @@ FLAGS = -Wall -Wextra -Werror -pthread -fsanitize=thread -g
 
 all: $(NAME)
 
-bomus: 
-	@cd bonus && make
-
 $(NAME): $(OBJS)
 	@cc $(FLAGS) $(OBJS) -o $(NAME)
 
@@ -23,12 +20,10 @@ $(NAME): $(OBJS)
 clean:
 	@rm -f $(OBJS)
 	@echo "\033[0;31mCleaned 🧹\033[0m"
-	@cd bonus && make clean
 
 fclean: clean
 	@rm -f $(NAME)
 	@echo "\033[0;31mphilo removed 🧹\033[0m"
-	@cd bonus && make fclean
 
 re: fclean all 
 	cd bonus && make re
