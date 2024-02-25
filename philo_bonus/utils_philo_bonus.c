@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:08:26 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/23 02:14:26 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/25 23:05:19 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,9 @@
 
 void	ft_print(t_philo *philo, char *str)
 {
-	sem_wait(philo->print_semaphore);
-	if (philo->died_flag == 0)
-	{
-		printf("%ld %ld %s", get_time() - philo->start, philo->philo_id, str);
-		sem_post(philo->print_semaphore);
-	}
-	sem_post(philo->print_semaphore);
+	sem_wait(philo->print);
+	printf("%ld %ld %s\n", get_time() - philo->start, philo->philo_id, str);
+	sem_post(philo->print);
 }
 
 void	ft_usleep(int duration)

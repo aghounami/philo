@@ -12,16 +12,15 @@ $(NAME): $(OBJS)
 
 %.o: %.c philo_bonus.h
 	@cc $(FLAGS) $< -c -o $@
-	@echo "✅ Compiling $<"
-	@echo "\033[4;35m\..................\033[0m"
+	@echo "\033[0;32m✅ Compiling $<\033[0m"
 
 clean:
 	@rm -f $(OBJS)
-	@echo "Cleaned 🧹"
+	@echo "\033[0;31mCleaned 🧹\033[0m"
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "philo removed 🧹"
+	@echo "\033[0;31mphilo removed 🧹\033[0m"
 
 re: fclean all
 

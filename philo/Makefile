@@ -25,9 +25,6 @@ fclean: clean
 	@rm -f $(NAME)
 	@echo "\033[0;31mphilo removed 🧹\033[0m"
 
-re: fclean all 
-	cd bonus && make re
-
 push:
 	@git add .
 	@git commit -m "last update"

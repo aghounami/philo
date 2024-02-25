@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 00:00:13 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/23 02:14:10 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/25 23:41:24 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,27 @@
 
 void	ft_philo(t_philo *philo)
 {
-	if (philo->philo_id % 2 == 0)
-		ft_usleep(100);
-	pthread_create(&philo->check_monitor, NULL, check_death, philo);
+	if (pthread_create(&philo->check_monitor, \
+			NULL, &check_death, philo))
+		ft_error("Error: Failed to create the thread");
 	while (1)
 	{
-		ft_take_forks(philo);
-		ft_eat(philo);
-		ft_sleep(philo);
-		ft_think(philo);
+		ft_print(philo, "is thinking");
+		sem_wait(philo->forks);
+		ft_print(philo, "has taken a fork");
+		sem_wait(philo->forks);
+		ft_print(philo, "has taken a fork");
+		ft_print(philo, "is eating");
+		ft_usleep(philo->time_to_eat);
+		philo->last_eat = get_time();
+		sem_post(philo->forks);
+		sem_post(philo->forks);
+		philo->counter += 1;
+		ft_print(philo, "is sleeping");
+		ft_usleep(philo->time_to_sleep);
 	}
-	pthread_join(philo->check_monitor, NULL);
+	if (pthread_join(philo->check_monitor, NULL))
+		ft_error("Error: Failed to join the thread");
 }
 
 int	ft_take_forks(t_philo *philo)
