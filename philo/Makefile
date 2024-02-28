@@ -5,7 +5,7 @@ SRCS =	utils_philo.c  philo.c utils.c monitor.c philosopher.c routine.c
 # 		monitor_bonus.c philosopher_bonus.c routine_bonus.c
 
 OBJS = $(SRCS:.c=.o)
-FLAGS = -Wall -Wextra -Werror -pthread -fsanitize=thread -g
+FLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 
@@ -25,10 +25,6 @@ fclean: clean
 	@rm -f $(NAME)
 	@echo "\033[0;31mphilo removed 🧹\033[0m"
 
-push:
-	@git add .
-	@git commit -m "last update"
-	@git push
-	@echo "\033[0;31mpushed to git 🚀\033[0m\n"
+re: fclean all
 
 .PHONY: clean
