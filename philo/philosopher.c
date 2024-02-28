@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:45:02 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/23 16:50:50 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/28 15:20:27 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,19 @@
 
 int	ft_init_mutex(t_table *table)
 {
-	table->died_flag_mutex = malloc(sizeof(pthread_mutex_t));
-	table->counter_mutex = malloc(sizeof(pthread_mutex_t));
-	table->print_mutex = malloc(sizeof(pthread_mutex_t));
-	table->meals_mutex = malloc(sizeof(pthread_mutex_t));
-	table->start_mutex = malloc(sizeof(pthread_mutex_t));
-	pthread_mutex_init(table->start_mutex, NULL);
-	pthread_mutex_init(table->print_mutex, NULL);
-	pthread_mutex_init(table->died_flag_mutex, NULL);
-	pthread_mutex_init(table->meals_mutex, NULL);
-	pthread_mutex_init(table->counter_mutex, NULL);
+	if (pthread_mutex_init(&table->start_mutex, NULL) != 0)
+		return (1);
+	if (pthread_mutex_init(&table->print_mutex, NULL) != 0)
+		return (1);
+	if (pthread_mutex_init(&table->meals_mutex, NULL) != 0)
+		return (1);
+	if (pthread_mutex_init(&table->counter_mutex, NULL) != 0)
+		return (1);
 	return (0);
 }
 
 int	ft_init_table(t_table *table, int ac, char **av)
 {
-	table->died_flag = 0;
 	ft_init_mutex(table);
 	table->nb_philo = ft_atoi(av[1]);
 	table->time_to_die = ft_atoi(av[2]);
@@ -87,7 +84,8 @@ int	ft_create_threads(t_table *table)
 			check_death(table);
 		i++;
 	}
-	check_death(table);
+	if (check_death(table) == 1)
+		return (1);
 	return (0);
 }
 

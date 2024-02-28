@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 00:00:13 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/25 23:41:24 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/28 14:51:47 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	ft_philo(t_philo *philo)
 		ft_error("Error: Failed to create the thread");
 	while (1)
 	{
-		ft_print(philo, "is thinking");
 		sem_wait(philo->forks);
 		ft_print(philo, "has taken a fork");
 		sem_wait(philo->forks);
@@ -32,6 +31,7 @@ void	ft_philo(t_philo *philo)
 		philo->counter += 1;
 		ft_print(philo, "is sleeping");
 		ft_usleep(philo->time_to_sleep);
+		ft_print(philo, "is thinking");
 	}
 	if (pthread_join(philo->check_monitor, NULL))
 		ft_error("Error: Failed to join the thread");

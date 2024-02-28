@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 08:44:36 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/23 16:53:08 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/28 15:12:18 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,10 @@ typedef struct s_philo
 
 typedef struct s_table
 {
-	int				died_flag;
-	pthread_mutex_t	*died_flag_mutex;
-	pthread_mutex_t	*print_mutex;
-	pthread_mutex_t	*meals_mutex;
-	pthread_mutex_t	*counter_mutex;
-	pthread_mutex_t	*start_mutex;
+	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	meals_mutex;
+	pthread_mutex_t	counter_mutex;
+	pthread_mutex_t	start_mutex;
 	int				nb_philo;
 	long			time_to_die;
 	long			time_to_eat;

@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 08:32:55 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/28 11:07:40 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/28 15:18:37 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	init_time(t_philo *philo)
 {
-	pthread_mutex_lock(philo->table->meals_mutex);
+	pthread_mutex_lock(&philo->table->meals_mutex);
 	philo->last_eat = get_time();
-	pthread_mutex_unlock(philo->table->meals_mutex);
+	pthread_mutex_unlock(&philo->table->meals_mutex);
 }
 
 int	ft_init_forks(t_table *table)
@@ -49,7 +49,7 @@ int	main(int ac, char **av)
 	}
 	if (ft_init_table(table, ac, av))
 	{
-		destroy_mutex(table, 0);
+		ft_free(table);
 		return (1);
 	}
 	if (ft_init_philo(table))

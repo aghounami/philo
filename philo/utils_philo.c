@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:08:26 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/22 04:24:46 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/28 15:22:54 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,9 @@ int	destroy_mutex(t_table *table, int i)
 			j++;
 		}
 	}
-	pthread_mutex_destroy(table->counter_mutex);
-	pthread_mutex_destroy(table->meals_mutex);
-	pthread_mutex_destroy(table->print_mutex);
-	pthread_mutex_destroy(table->died_flag_mutex);
-	free(table->died_flag_mutex);
-	free(table->counter_mutex);
-	free(table->print_mutex);
-	free(table->meals_mutex);
+	pthread_mutex_destroy(&table->counter_mutex);
+	pthread_mutex_destroy(&table->meals_mutex);
+	pthread_mutex_destroy(&table->print_mutex);
 	free(table->philo);
 	free(table->forks);
 	free(table);
@@ -49,25 +44,9 @@ int	ft_free(t_table *table)
 
 void	ft_print(t_philo *philo, char *str)
 {
-	pthread_mutex_lock(philo->table->print_mutex);
+	pthread_mutex_lock(&philo->table->print_mutex);
 	printf("%ld %d %s", get_time() - philo->start, philo->id, str);
-	pthread_mutex_unlock(philo->table->print_mutex);
-}
-
-int	chek_before_lock(t_philo *philo, int i)
-{
-	pthread_mutex_lock(philo->table->died_flag_mutex);
-	if (philo->table->died_flag == 1)
-	{
-		if (i == 1)
-			pthread_mutex_unlock(philo->left_fork);
-		else if (i == 2)
-			pthread_mutex_unlock(philo->right_fork);
-		pthread_mutex_unlock(philo->table->died_flag_mutex);
-		return (1);
-	}
-	pthread_mutex_unlock(philo->table->died_flag_mutex);
-	return (0);
+	pthread_mutex_unlock(&philo->table->print_mutex);
 }
 
 void	ft_usleep(int duration)
