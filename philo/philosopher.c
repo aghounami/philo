@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:45:02 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/28 15:20:27 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/29 02:11:28 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	ft_init_mutex(t_table *table)
 {
-	if (pthread_mutex_init(&table->start_mutex, NULL) != 0)
-		return (1);
 	if (pthread_mutex_init(&table->print_mutex, NULL) != 0)
 		return (1);
 	if (pthread_mutex_init(&table->meals_mutex, NULL) != 0)
@@ -27,7 +25,7 @@ int	ft_init_mutex(t_table *table)
 
 int	ft_init_table(t_table *table, int ac, char **av)
 {
-	ft_init_mutex(table);
+	
 	table->nb_philo = ft_atoi(av[1]);
 	table->time_to_die = ft_atoi(av[2]);
 	table->time_to_eat = ft_atoi(av[3]);
@@ -54,13 +52,15 @@ int	ft_init_philo(t_table *table)
 	{
 		table->philo[i].id = i + 1;
 		table->philo[i].meals_counter = 0;
-		table->philo[i].last_eat = get_time();
 		table->philo[i].start = get_time();
+		table->philo[i].last_eat = get_time();
 		table->philo[i].left_fork = &table->forks[(i + 1) % table->nb_philo];
 		table->philo[i].right_fork = &table->forks[i];
 		table->philo[i].table = table;
 		i++;
 	}
+	if (ft_init_mutex(table))
+		return (1);
 	if (ft_init_forks(table))
 		return (1);
 	if (ft_create_threads(table) == 1)
@@ -79,9 +79,11 @@ int	ft_create_threads(t_table *table)
 	{
 		if (pthread_create(&table->philo[i].thread, NULL,
 				ft_philo, &table->philo[i]))
-			return (ft_error("Error: pthread_create failed\n"));
-		if (table->time_to_die == 0)
-			check_death(table);
+		{
+			ft_error("Error: pthread_create failed\n");
+			return (1);
+		}
+		// pthread_detach(table->philo[i].thread);
 		i++;
 	}
 	if (check_death(table) == 1)

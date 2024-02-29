@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:22:40 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/28 15:20:55 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/29 02:11:43 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	check_meals(t_philo *philo, int nb_must_eat)
 {
 	pthread_mutex_lock(&philo->table->counter_mutex);
-	if (philo->meals_counter == nb_must_eat)
+	if (philo->meals_counter >= nb_must_eat && nb_must_eat != -1)
 	{
 		pthread_mutex_unlock(&philo->table->counter_mutex);
 		return (1);

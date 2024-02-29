@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 08:44:36 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/28 15:12:18 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/29 02:09:50 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ typedef struct s_table
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	meals_mutex;
 	pthread_mutex_t	counter_mutex;
-	pthread_mutex_t	start_mutex;
 	int				nb_philo;
 	long			time_to_die;
 	long			time_to_eat;
@@ -46,12 +45,12 @@ typedef struct s_table
 	t_philo			*philo;
 }	t_table;
 
+int		check_meals(t_philo *philo, int nb_must_eat);
 int		ft_init_forks(t_table *table);
 void	init_time(t_philo *philo);
 void	ft_usleep(int duration);
 int		ft_free(t_table *table);
 int		destroy_mutex(t_table *table, int i);
-int		chek_before_lock(t_philo *philo, int i);
 int		check_death(t_table *table);
 int		parse_args(char **av);
 int		ft_atoi(const char *str);
