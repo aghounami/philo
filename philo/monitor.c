@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:22:40 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/29 04:42:04 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/29 05:04:06 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	check_death(t_table *table)
 			pthread_mutex_lock(&table->philo[i].table->meals_mutex);
 			if (get_time() - table->philo[i].last_eat > table->time_to_die)
 			{
-				pthread_mutex_unlock(&table->philo[i].table->meals_mutex);
 				pthread_mutex_lock(&table->print_mutex);
 				printf("%ld %d died\n", get_time() - table->philo[i].start,
 					table->philo[i].id);

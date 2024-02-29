@@ -6,11 +6,20 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 00:00:13 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/29 04:42:38 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/29 05:04:26 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	ft_take_forks(t_philo *philo)
+{
+	pthread_mutex_lock(philo->left_fork);
+	ft_print(philo, "has taken a fork\n");
+	pthread_mutex_lock(philo->right_fork);
+	ft_print(philo, "has taken a fork\n");
+	return (0);
+}
 
 void	*ft_philo(void *arg)
 {
@@ -20,12 +29,9 @@ void	*ft_philo(void *arg)
 	if (philo->id % 2 == 0)
 		ft_usleep(100);
 	init_time(philo);
-	while (1)
+	while (check_meals(philo, philo->table->nb_must_eat) != 1)
 	{
-		pthread_mutex_lock(philo->left_fork);
-		ft_print(philo, "has taken a fork\n");
-		pthread_mutex_lock(philo->right_fork);
-		ft_print(philo, "has taken a fork\n");
+		ft_take_forks(philo);
 		ft_print(philo, "is eating\n");
 		ft_usleep(philo->table->time_to_eat);
 		init_time(philo);

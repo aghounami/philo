@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 17:30:23 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/25 23:07:14 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/29 05:05:47 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include <sys/wait.h>
 # include <semaphore.h>
 # include <signal.h>
-# include <pthread.h>
 
 typedef struct s_philo
 {
@@ -57,6 +56,5 @@ int		ft_eat(t_philo *philo);
 int		ft_sleep(t_philo *philo);
 int		ft_think(t_philo *philo);
 void	ft_print(t_philo *philo, char *str);
-// void	exit_philo(t_philo **philo);
 
 #endif
