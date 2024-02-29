@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:45:02 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/29 02:11:28 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/29 04:40:30 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	ft_create_threads(t_table *table)
 			ft_error("Error: pthread_create failed\n");
 			return (1);
 		}
-		// pthread_detach(table->philo[i].thread);
+		pthread_detach(table->philo[i].thread);
 		i++;
 	}
 	if (check_death(table) == 1)

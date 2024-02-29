@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:22:40 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/29 02:11:43 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/02/29 04:42:04 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	check_death(t_table *table)
 	while (1)
 	{
 		i = 0;
+		if (check_meals(&table->philo[i], table->nb_must_eat) == 1)
+			return (1);
 		while (i < table->nb_philo)
 		{
 			pthread_mutex_lock(&table->philo[i].table->meals_mutex);
@@ -43,8 +45,6 @@ int	check_death(t_table *table)
 				return (1);
 			}
 			pthread_mutex_unlock(&table->philo[i].table->meals_mutex);
-			if (check_meals(&table->philo[i], table->nb_must_eat))
-				return (1);
 			i++;
 		}
 	}
