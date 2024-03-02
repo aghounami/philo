@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:45:02 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/28 15:15:03 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/03/02 12:06:55 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,11 @@ t_philo	*ft_init_table(int ac, char **av)
 	t_philo	*philo;
 
 	philo = (t_philo *)malloc(sizeof(t_philo));
+	if (!philo)
+		exit (1);
 	philo->id = malloc(sizeof(int) * ft_atoi(av[1]));
-	if (!philo || !philo->id)
-		return (NULL);
+	if (!philo->id)
+		exit (1);
 	philo->nb_philo = ft_atoi(av[1]);
 	philo->time_to_die = ft_atoi(av[2]);
 	philo->time_to_eat = ft_atoi(av[3]);
@@ -69,6 +71,8 @@ t_philo	*ft_init_table(int ac, char **av)
 		philo->nb_must_eat = ft_atoi(av[5]);
 	else
 		philo->nb_must_eat = -1;
+	if (philo->nb_must_eat == 0)
+		exit (1);
 	philo->counter = 0;
 	philo->stop = 0;
 	philo->died = 0;

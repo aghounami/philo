@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:08:26 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/29 02:10:18 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/03/02 12:16:36 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,11 @@ void	ft_usleep(int duration)
 	{
 		usleep(10);
 	}
+}
+
+void	init_time(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->table->meals_mutex);
+	philo->last_eat = get_time();
+	pthread_mutex_unlock(&philo->table->meals_mutex);
 }

@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 15:37:18 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/19 17:29:55 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/03/02 12:07:54 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_strlen(char *str)
 int	ft_error(char *str)
 {
 	write(2, str, ft_strlen(str));
-	return (0);
+	exit(1);
 }
 
 int	ft_atoi(const char *str)
