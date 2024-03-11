@@ -6,7 +6,7 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 13:08:26 by aghounam          #+#    #+#             */
-/*   Updated: 2024/03/02 12:16:36 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/03/11 22:21:20 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_print(t_philo *philo, char *str)
 {
 	pthread_mutex_lock(&philo->table->print_mutex);
 	printf("%ld %d %s", get_time() - philo->start, philo->id, str);
-	pthread_mutex_unlock(&philo->table->print_mutex);
+	pthread_mutex_unlock(&philo->table->print_mutex); 
 }
 
 void	ft_usleep(int duration)

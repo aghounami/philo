@@ -3,17 +3,16 @@ SRCS =	utils_philo.c  philo.c utils.c monitor.c philosopher.c routine.c
 
 OBJS = $(SRCS:.c=.o)
 
-CFALGS = -Wall -Wextra -Werror
+Cflags = -Wall -Wextra -Werror
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@cc $(CFALGS) $(OBJS) -o $(NAME)
+	@cc $(Cflags) $(OBJS) -o $(NAME)
 
 %.o: %.c philo.h
-	@cc $(CFALGS) $< -c -o $@
+	@cc $(Cflags) $< -c -o $@
 	@echo "\033[0;32m✅ Compiling $<\033[0m"
-
 
 clean:
 	@rm -f $(OBJS)

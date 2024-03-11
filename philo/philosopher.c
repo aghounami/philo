@@ -6,13 +6,13 @@
 /*   By: aghounam <aghounam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:45:02 by aghounam          #+#    #+#             */
-/*   Updated: 2024/02/29 05:04:20 by aghounam         ###   ########.fr       */
+/*   Updated: 2024/03/11 22:31:11 by aghounam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_init_mutex(t_table *table)
+int	 ft_init_mutex(t_table *table)
 {
 	if (pthread_mutex_init(&table->print_mutex, NULL) != 0)
 		return (1);
@@ -64,9 +64,9 @@ int	ft_init_philo(t_table *table)
 		return (1);
 	if (ft_create_threads(table) == 1)
 		return (1);
-	if (ft_join_threads(table))
+	if (ft_join_threads(table)) 
 		return (1);
-	return (0);
+	return (0); 
 }
 
 int	ft_create_threads(t_table *table)
